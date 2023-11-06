@@ -7,7 +7,7 @@ import css from './App.module.css';
 
 export class App extends React.Component {
   state = {
-    contacts: [],
+    contacts:  [],
     filter: '',
   };
 
@@ -64,9 +64,9 @@ export class App extends React.Component {
   //--------------------------------------
 
   componentDidMount(){
-    const localContacts = JSON.parse(localStorage.getItem('contacts') || []);
+    const localContacts = JSON.parse(localStorage.getItem('contacts')) || [];
     this.setState({
-      contacts: localContacts 
+      contacts: localContacts
     })
 
   }
