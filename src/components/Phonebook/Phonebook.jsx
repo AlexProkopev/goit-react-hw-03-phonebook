@@ -1,38 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from "./PhoneBook.module.css"
 
-export default class Phonebook extends React.Component {
-  state = {
-    name: '',
-      number: "",
-  };
+const Phonebook = ({handleAddContact}) => {
+ 
 
-  handleInputChange = e => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+
+
+  const handleInputChange = e => {
     e.preventDefault();
     const value = e.target.value;
+    const name = e.target.name;
 
-    this.setState({ [e.target.name]: value });
-    console.log(value);
+    switch(name){
+      case 'name':
+        setName(value);
+        return
+      case 'number':
+        setNumber(value);
+        return;
+      default:
+        break;
+    }
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const name = this.state.name;
-    const number = this.state.number;
+   
 
     const contacts = {
       name: String(name),
       number: Number.parseFloat(number),
     };
 
-    this.props.handleAddContact(contacts);
+    handleAddContact(contacts);
 
-    this.setState({ name: '', number: "" });
+    setName('');
+    setNumber('');
   };
 
-  render() {
     return (
-      <form className={css.form} onSubmit={this.handleSubmit}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <label className={css.label} htmlFor="name">Введете имя</label>
         <input className={css.input}
           type="text"
@@ -40,8 +50,8 @@ export default class Phonebook extends React.Component {
           pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          value={this.state.name}
-          onChange={this.handleInputChange}
+          value={name}
+          onChange={handleInputChange}
         />
           
           <label className={css.label} htmlFor="number">Введете Номер</label>
@@ -52,13 +62,12 @@ export default class Phonebook extends React.Component {
           pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required 
-          value={this.state.number}
-          onChange={this.handleInputChange}
+          value={number}
+          onChange={handleInputChange}
         />
         <button className={css.submitBtn} type="submit">Add contact</button>
       </form>
     );
   }
-}
 
-//commi
+export default Phonebook
